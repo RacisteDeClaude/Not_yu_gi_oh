@@ -1,0 +1,53 @@
+body {
+    background-color: #9588DB;
+}
+
+h1 {
+    color: rgb(213, 185, 149);
+    text-align: center;
+}
+
+p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: medium;
+}
+
+.container {
+    display: flex
+}
+
+.container div {
+    .rare {
+        background-color: green;
+        margin: 10px;
+        padding: 20px;
+        font-size: 20px;
+    }
+    .super-rare {
+        background-color: blue;
+        margin: 10px;
+        padding: 20px;
+        font-size: 20px;
+    }
+    .epic {
+        background-color: purple;
+        margin: 10px;
+        padding: 20px;
+        font-size: 20px;
+    }
+    .legendary {
+        background: #fff200;
+        background: linear-gradient(151deg, rgba(255, 242, 0, 1) 0%, rgba(163, 157, 72, 1) 50%, rgba(237, 222, 83, 1) 100%);
+        margin: 10px;
+        padding: 20px;
+        font-size: 20px;
+    }
+    .ultra-rare {
+        background: #00eaff;
+        background: linear-gradient(151deg, rgba(0, 234, 255, 1) 0%, rgba(38, 133, 128, 1) 50%, rgba(83, 237, 229, 1) 100%);
+        margin: 10px;
+        padding: 20px;
+        font-size: 20px;
+    }
+}
+
