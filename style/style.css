@@ -19,18 +19,24 @@ p {
 .container div {
     .rare {
         background-color: green;
+        border-radius: 25px;
+        border: 2px solid yellow;
         margin: 10px;
         padding: 20px;
         font-size: 20px;
     }
     .super-rare {
         background-color: blue;
+        border-radius: 25px;
+        border: 2px solid yellow;
         margin: 10px;
         padding: 20px;
         font-size: 20px;
     }
     .epic {
         background-color: purple;
+        border-radius: 25px;
+        border: 2px solid yellow;
         margin: 10px;
         padding: 20px;
         font-size: 20px;
@@ -38,6 +44,8 @@ p {
     .legendary {
         background: #fff200;
         background: linear-gradient(151deg, rgba(255, 242, 0, 1) 0%, rgba(163, 157, 72, 1) 50%, rgba(237, 222, 83, 1) 100%);
+        border-radius: 25px;
+        border: 2px solid yellow;
         margin: 10px;
         padding: 20px;
         font-size: 20px;
@@ -45,6 +53,8 @@ p {
     .ultra-rare {
         background: #00eaff;
         background: linear-gradient(151deg, rgba(0, 234, 255, 1) 0%, rgba(38, 133, 128, 1) 50%, rgba(83, 237, 229, 1) 100%);
+        border-radius: 25px;
+        border: 2px solid yellow;
         margin: 10px;
         padding: 20px;
         font-size: 20px;
