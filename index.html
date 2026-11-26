@@ -17,6 +17,7 @@
                 <img src="style/assets/magicieng.jpg" alt="M. Mega Magicien du turfu" width="200" height="200">
                 <ul><li>Attack : 2500</li></ul>
                 <ul><li>Defense : 1900</li></ul>
+                <ul><li>niveau : Arbitre De Guerres</li></ul>
                 <p>Effet : gagne la partie instant sans pré-avis d'adversaire.</p>
             </div>
         </div>
@@ -28,7 +29,8 @@
                 <img src="style/assets/la_porte.webp" alt="La Porte" width="200" height="200">
                 <ul><li>Attack : 1600</li></ul>
                 <ul><li>Defense : 2000</li></ul>
-                <p>Effet : ce monstre a un business de porte en porte.</p>
+                <ul><li>niveau : Mur D'Acier</li></ul>
+                <p>Effet : ce monstre a un business de Porte En Porte.</p>
             </div>
         </div>
 
@@ -39,17 +41,19 @@
                 <img src="style/assets/lezard.jpg" alt="Lézard bleu aux yeux blanc" width="200" height="200">
                 <ul><li>Attack : 3000</li></ul>
                 <ul><li>Defense : 2500</li></ul>
-                <p>Effet : tu dois sacrifier ta capacité de lire (et d'utiliser Claude par la même occasion).</p>
+                <ul><li>niveau : Plus fort que Claude</li></ul>
+                <p>Effet : tu dois sacrifier ta capacité de Lire (et d'utiliser Claude par la même occasion).</p>
             </div>
         </div>
 
         <div>
-            <div class="légendary">
-                carte : légendary
+            <div class="legendary">
+                carte : legendary
                 <p>Nom : La super truite de la mort qui tue</p>
-                <img src="style/assets/truite.jpeg" alt="La super truite de la mort qui tue" width="200" height="200">
+                <img src="style/assets/truite.jpeg" alt="La Super Truite De La Mort Qui Tue" width="200" height="200">
                 <ul><li>Attack : 3500</li></ul>
                 <ul><li>Defense : 900</li></ul>
+                <ul><li>niveau : Renne</li></ul>
                 <p>Effet : elle te regarde, tu meurs.</p>
             </div>
         </div>
@@ -61,32 +65,37 @@
                 <img src="style/assets/boom.jpg" alt="Bombe atomique" width="200" height="200">
                 <ul><li>Attack : 2600</li></ul>
                 <ul><li>Defense : 1000</li></ul>
+                <ul><li>niveau : Rusisa Win</li></ul>
                 <p>Effet : ce monstre fait boom quand on le regarde mal ou que l'on utilise Claude.</p>
             </div>
         </div>
     </div>
 
     <section>
-        <h2>Cat Facts API</h2>
-        <button id="cat-button">Cat Facts</button>
-        <p id="cat-fact">Clique sur le bouton pour découvrir un fait sur les monstre.</p>
+        <h2>Monsters Facts API</h2>
+        <button id="monsters-button">Monsters Facts</button>
+        <p id="monsters-fact">Clique sur le bouton pour découvrir un fait sur les monstres.</p>
+        <img id="monster-gif" src="style/assets/monstre.gif" alt="Monstre apparu" width="300" hidden>
     </section>
 
     <section>
         <h2>PokéAPI</h2>
-        <label for="pokemon-name">Choisis ton monstre :</label>
+        <label for="pokemon-name">Choisis un vrai Pokémon en anglais :</label>
         <input type="text" id="pokemon-name" placeholder="Exemple : charmeleon">
-        <button id="pokemon-button">Afficher mon monstre</button>
+        <button id="pokemon-button">Afficher mon Pokémon</button>
 
         <div id="pokemon-result"></div>
+        <img id="pokemon-gif" src="style/assets/monstre.gif" alt="Monstre apparu" width="300" hidden>
     </section>
 
     <script>
-        const catButton = document.getElementById("cat-button");
-        const catFact = document.getElementById("cat-fact");
+        const monstersButton = document.getElementById("monsters-button");
+        const monstersFact = document.getElementById("monsters-fact");
+        const monsterGif = document.getElementById("monster-gif");
 
-        catButton.addEventListener("click", async function () {
-            catFact.textContent = "Chargement...";
+        monstersButton.addEventListener("click", async function () {
+            monstersFact.textContent = "Chargement...";
+            monsterGif.hidden = true;
 
             try {
                 const response = await fetch("https://catfact.ninja/fact");
@@ -96,9 +105,15 @@
                 }
 
                 const data = await response.json();
-                catFact.textContent = data.fact;
+
+                if (!data.fact) {
+                    throw new Error("L'API n'a renvoyé aucun fait.");
+                }
+
+                monstersFact.textContent = data.fact;
             } catch (error) {
-                catFact.textContent = "Une erreur est survenue. Réessaie plus tard.";
+                monstersFact.textContent = "Les monstres ont voulu se cacher ! Réessaie plus tard.";
+                monsterGif.hidden = false;
                 console.error(error);
             }
         });
@@ -106,30 +121,39 @@
         const pokemonButton = document.getElementById("pokemon-button");
         const pokemonName = document.getElementById("pokemon-name");
         const pokemonResult = document.getElementById("pokemon-result");
+        const pokemonGif = document.getElementById("pokemon-gif");
 
         pokemonButton.addEventListener("click", async function () {
             const name = pokemonName.value.trim().toLowerCase();
 
+            pokemonGif.hidden = true;
+
             if (name === "") {
-                pokemonResult.textContent = "Entre le nom d'un vrais Pokémon en anglais";
+                pokemonResult.textContent = "Entre le nom d'un vrai Pokémon en anglais.";
+                pokemonGif.hidden = false;
                 return;
             }
 
             pokemonResult.textContent = "Chargement...";
 
             try {
-                const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + name);
+                const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + encodeURIComponent(name));
 
                 if (!response.ok) {
-                    throw new Error("Pokémon introuvable, essaye avec un vrais pokémon son nom en anglais");
+                    throw new Error("Pokémon introuvable.");
                 }
 
                 const data = await response.json();
+
+                if (!data || !data.name) {
+                    throw new Error("L'API n'a renvoyé aucun Pokémon.");
+                }
+
                 const image = data.sprites.front_default;
 
                 pokemonResult.innerHTML = `
                     <h3>${data.name}</h3>
-                    <img src="${image}" alt="${data.name}" width="200" height="200">
+                    ${image ? `<img src="${image}" alt="${data.name}" width="200" height="200">` : "<p>Aucune image disponible pour ce Pokémon.</p>"}
                     <p>Numéro : ${data.id}</p>
                     <p>Taille : ${data.height / 10} m</p>
                     <p>Poids : ${data.weight / 10} kg</p>
@@ -138,7 +162,8 @@
                     }).join(", ")}</p>
                 `;
             } catch (error) {
-                pokemonResult.textContent = "Pokémon introuvable. Vérifie son nom et réessaie.";
+                pokemonResult.textContent = "Pokémon introuvable. Vérifie son nom en anglais et réessaie.";
+                pokemonGif.hidden = false;
                 console.error(error);
             }
         });
